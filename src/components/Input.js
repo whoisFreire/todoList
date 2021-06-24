@@ -1,8 +1,7 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { PlusSquareFilled } from '@ant-design/icons'
 import { Tarefa } from './Tarefa'
-
 
 export const Input = (props) => {
     const [tasks, setTasks] = useState([])
@@ -29,19 +28,23 @@ export const Input = (props) => {
         align-items: center;
         justify-content: center;
     `
-
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            setTasks((task) => [...task, document.getElementById('inputField').value])
+        }
+    }
     return (
         <div>
             <Wrapper>
-                <Input id='inputField'/>
+                <Input id='inputField' placeholder='Digite sua Task aqui' onKeyPress={handleKeyPress} />
                 <Button
-                    onClick={()=>{setTasks((task)=>[...task, document.getElementById('inputField').value])}}
+                    onClick={() => { setTasks((task) => [...task, document.getElementById('inputField').value]) }}
                 ><PlusSquareFilled /></Button>
             </Wrapper>
             <Wrapper>
-                <Tarefa 
+                <Tarefa
                     value={tasks}
-                    onChange={(index, newValue)=> {
+                    onChange={(index, newValue) => {
                         const attTask = [...tasks]
                         attTask.splice(index, 1)
                         setTasks(attTask)
